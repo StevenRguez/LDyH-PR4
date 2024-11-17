@@ -1,6 +1,4 @@
-
 package org.fogbeam.example.opennlp.training;
-
 
 import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
@@ -16,75 +14,100 @@ import opennlp.tools.doccat.DocumentSampleStream;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
 
-
+/**
+ * @file DocumentClassifierTrainer.java
+ * @brief Clase para entrenar un modelo de clasificación de documentos utilizando OpenNLP.
+ *
+ * Esta clase utiliza datos de entrenamiento en formato de texto para generar un modelo
+ * de clasificación de documentos basado en categorías predefinidas.
+ */
 public class DocumentClassifierTrainer
 {
-	public static void main( String[] args ) throws Exception
+	/**
+	 * @brief Método principal para entrenar un modelo de clasificación de documentos.
+	 *
+	 * Este método procesa un archivo de datos de entrenamiento, entrena un modelo de
+	 * categorización de documentos y guarda el modelo entrenado en un archivo para
+	 * su posterior uso.
+	 *
+	 * @param args Argumentos de línea de comandos (no utilizados).
+	 * @throws Exception En caso de errores durante la ejecución.
+	 */
+	public static void main(String[] args) throws Exception
 	{
-		DoccatModel model = null;
-		InputStream dataIn = null;
+		DoccatModel model = null; /**< Modelo de clasificación de documentos generado. */
+		InputStream dataIn = null; /**< Flujo de entrada para leer los datos de entrenamiento. */
+
 		try
 		{
-			dataIn = new FileInputStream( "training_data/en-doccat.train" );
-			ObjectStream<String> lineStream = new PlainTextByLineStream(
-					dataIn, "UTF-8" );
-			ObjectStream<DocumentSample> sampleStream = new DocumentSampleStream(
-					lineStream );
-			model = DocumentCategorizerME.train( "en", sampleStream );
+			// Carga los datos de entrenamiento desde un archivo.
+			dataIn = new FileInputStream("training_data/en-doccat.train");
+
+			// Convierte las líneas de texto en un flujo de muestras de documentos.
+			ObjectStream<String> lineStream = new PlainTextByLineStream(dataIn, "UTF-8");
+			ObjectStream<DocumentSample> sampleStream = new DocumentSampleStream(lineStream);
+
+			// Entrena el modelo utilizando las muestras de documentos.
+			model = DocumentCategorizerME.train(
+					"en",          // Idioma del modelo.
+					sampleStream   // Flujo de datos de entrenamiento.
+			);
 		}
-		catch( IOException e )
+		catch (IOException e)
 		{
-			// Failed to read or parse training data, training failed
+			// Maneja errores al leer o procesar los datos de entrenamiento.
 			e.printStackTrace();
 		}
 		finally
 		{
-			if( dataIn != null )
+			// Cierra el flujo de entrada si está abierto.
+			if (dataIn != null)
 			{
 				try
 				{
 					dataIn.close();
 				}
-				catch( IOException e )
+				catch (IOException e)
 				{
-					// Not an issue, training already finished.
-					// The exception should be logged and investigated
-					// if part of a production system.
+					// Error al cerrar el flujo de entrada.
 					e.printStackTrace();
 				}
 			}
 		}
-		OutputStream modelOut = null;
-		String modelFile = "models/en-doccat.model";
+
+		OutputStream modelOut = null; /**< Flujo de salida para guardar el modelo entrenado. */
+		String modelFile = "models/en-doccat.model"; /**< Ruta del archivo donde se guardará el modelo. */
+
 		try
 		{
-			modelOut = new BufferedOutputStream( new FileOutputStream(
-					modelFile ) );
-			model.serialize( modelOut );
+			// Guarda el modelo entrenado en un archivo.
+			modelOut = new BufferedOutputStream(new FileOutputStream(modelFile));
+			model.serialize(modelOut);
 		}
-		catch( IOException e )
+		catch (IOException e)
 		{
-			// Failed to save model
+			// Maneja errores al guardar el modelo.
 			e.printStackTrace();
 		}
 		finally
 		{
-			if( modelOut != null )
+			// Cierra el flujo de salida si está abierto.
+			if (modelOut != null)
 			{
 				try
 				{
 					modelOut.close();
 				}
-				catch( IOException e )
+				catch (IOException e)
 				{
-					// Failed to correctly save model.
-					// Written model might be invalid.
+					// Error al cerrar el flujo de salida, el modelo puede ser inválido.
 					e.printStackTrace();
 				}
 			}
 		}
-		
-		
-		System.out.println( "done" );
+
+		// Indica que el entrenamiento ha finalizado correctamente.
+		System.out.println("done");
 	}
 }
+
