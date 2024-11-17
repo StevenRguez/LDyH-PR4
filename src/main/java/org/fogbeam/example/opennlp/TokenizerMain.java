@@ -15,6 +15,7 @@ import opennlp.tools.tokenize.TokenizerME;
 import opennlp.tools.tokenize.TokenizerModel;
 
 // Ejemplo de uso: java TokenizerMain input1.txt input2.txt input3.txt output.txt
+// mvn exec:java -Dexec.mainClass="org.fogbeam.example.opennlp.TokenizerMain" -Dexec.args="training_data/en-doccat.train salida.txt"
 
 /**
  * @file TokenizerMain.java
