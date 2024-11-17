@@ -14,6 +14,9 @@ import opennlp.tools.tokenize.Tokenizer;
 import opennlp.tools.tokenize.TokenizerME;
 import opennlp.tools.tokenize.TokenizerModel;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 // Ejemplo de uso: java TokenizerMain input1.txt input2.txt input3.txt output.txt
 // mvn exec:java -Dexec.mainClass="org.fogbeam.example.opennlp.TokenizerMain" -Dexec.args="training_data/en-doccat.train salida.txt"
 
@@ -27,6 +30,9 @@ import opennlp.tools.tokenize.TokenizerModel;
  */
 public class TokenizerMain
 {
+	// Logger para el registro de mensajes
+	private static final Logger LOGGER = Logger.getLogger(TokenizerMain.class.getName());
+
 	/**
 	 * @brief Metodo principal del programa.
 	 *
@@ -90,7 +96,9 @@ public class TokenizerMain
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+			// En desarrollo: registrar detalles del error para depuración
+			LOGGER.log(Level.SEVERE, "Error loading the model: {0}", e.getMessage());
+
 		}
 		finally
 		{

@@ -7,6 +7,9 @@ import java.io.InputStream;
 import opennlp.tools.sentdetect.SentenceDetectorME;
 import opennlp.tools.sentdetect.SentenceModel;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * @file SentenceDetectionMain.java
  * @brief Programa principal para la detección de oraciones utilizando OpenNLP.
@@ -16,6 +19,10 @@ import opennlp.tools.sentdetect.SentenceModel;
  */
 public class SentenceDetectionMain
 {
+
+	// Logger para el registro de mensajes
+	private static final Logger LOGGER = Logger.getLogger(PartOfSpeechTaggerMain.class.getName());
+
 	/**
 	 * @brief Metodo principal del programa.
 	 *
@@ -55,8 +62,9 @@ public class SentenceDetectionMain
 		}
 		catch (IOException e)
 		{
-			// Maneja errores durante la carga del modelo o la lectura de datos.
-			e.printStackTrace();
+			// En desarrollo: registrar detalles del error para depuración
+			LOGGER.log(Level.SEVERE, "Error loading the model: {0}", e.getMessage());
+
 		}
 		finally
 		{

@@ -13,6 +13,10 @@ import opennlp.tools.doccat.DocumentSample;
 import opennlp.tools.doccat.DocumentSampleStream;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
+import org.fogbeam.example.opennlp.ChunkerMain;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @file DocumentClassifierTrainer.java
@@ -23,10 +27,13 @@ import opennlp.tools.util.PlainTextByLineStream;
  */
 public class DocumentClassifierTrainer
 {
+	// Logger para el registro de mensajes
+	private static final Logger LOGGER = Logger.getLogger(ChunkerMain.class.getName());
+
 	/**
-	 * @brief Método principal para entrenar un modelo de clasificación de documentos.
+	 * @brief Metodo principal para entrenar un modelo de clasificación de documentos.
 	 *
-	 * Este método procesa un archivo de datos de entrenamiento, entrena un modelo de
+	 * Este metodo procesa un archivo de datos de entrenamiento, entrena un modelo de
 	 * categorización de documentos y guarda el modelo entrenado en un archivo para
 	 * su posterior uso.
 	 *
@@ -55,8 +62,8 @@ public class DocumentClassifierTrainer
 		}
 		catch (IOException e)
 		{
-			// Maneja errores al leer o procesar los datos de entrenamiento.
-			e.printStackTrace();
+			// En desarrollo: registrar detalles del error para depuración
+			LOGGER.log(Level.SEVERE, "Error loading the model: {0}", e.getMessage());
 		}
 		finally
 		{
@@ -69,8 +76,8 @@ public class DocumentClassifierTrainer
 				}
 				catch (IOException e)
 				{
-					// Error al cerrar el flujo de entrada.
-					e.printStackTrace();
+					// En desarrollo: registrar detalles del error para depuración
+					LOGGER.log(Level.SEVERE, "Error loading the model: {0}", e.getMessage());
 				}
 			}
 		}
@@ -86,8 +93,8 @@ public class DocumentClassifierTrainer
 		}
 		catch (IOException e)
 		{
-			// Maneja errores al guardar el modelo.
-			e.printStackTrace();
+			// En desarrollo: registrar detalles del error para depuración
+			LOGGER.log(Level.SEVERE, "Error loading the model: {0}", e.getMessage());
 		}
 		finally
 		{
@@ -100,8 +107,8 @@ public class DocumentClassifierTrainer
 				}
 				catch (IOException e)
 				{
-					// Error al cerrar el flujo de salida, el modelo puede ser inválido.
-					e.printStackTrace();
+					// En desarrollo: registrar detalles del error para depuración
+					LOGGER.log(Level.SEVERE, "Error loading the model: {0}", e.getMessage());
 				}
 			}
 		}

@@ -26,9 +26,9 @@ import opennlp.tools.util.TrainingParameters;
 public class SentenceDetectionTrainer {
 
 	/**
-	 * @brief Método principal para entrenar un modelo de detección de oraciones.
+	 * @brief Metodo principal para entrenar un modelo de detección de oraciones.
 	 *
-	 * Este método procesa un archivo de datos de entrenamiento, entrena un modelo
+	 * Este metodo procesa un archivo de datos de entrenamiento, entrena un modelo
 	 * de detección de oraciones y guarda el modelo resultante en un archivo para
 	 * uso futuro.
 	 *

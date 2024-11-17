@@ -6,6 +6,9 @@ import java.io.InputStream;
 import opennlp.tools.doccat.DoccatModel;
 import opennlp.tools.doccat.DocumentCategorizerME;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * @file DocumentClassifierMain.java
  * @brief Programa principal para clasificar texto en categorías usando un modelo preentrenado de OpenNLP.
@@ -15,6 +18,8 @@ import opennlp.tools.doccat.DocumentCategorizerME;
  */
 public class DocumentClassifierMain
 {
+	// Logger para el registro de mensajes
+	private static final Logger LOGGER = Logger.getLogger(DocumentClassifierMain.class.getName());
 
 	/**
 	 * @brief Metodo principal del programa.
@@ -52,8 +57,8 @@ public class DocumentClassifierMain
 		}
 		catch( Exception e )
 		{
-			// Maneja errores durante la carga del modelo o la clasificación.
-			e.printStackTrace();
+			// En desarrollo: registrar detalles del error para depuración
+			LOGGER.log(Level.SEVERE, "Error loading the model: {0}", e.getMessage());
 		}
 		finally
 		{

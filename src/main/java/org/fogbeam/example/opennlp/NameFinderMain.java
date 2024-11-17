@@ -9,6 +9,9 @@ import opennlp.tools.namefind.NameFinderME;
 import opennlp.tools.namefind.TokenNameFinderModel;
 import opennlp.tools.util.Span;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * @file NameFinderMain.java
  * @brief Programa principal para la detección de nombres propios en texto utilizando OpenNLP.
@@ -18,6 +21,10 @@ import opennlp.tools.util.Span;
  */
 public class NameFinderMain
 {
+
+	// Logger para el registro de mensajes
+	private static final Logger LOGGER = Logger.getLogger(NameFinderMain.class.getName());
+
 	/**
 	 * @brief Metodo principal del programa.
 	 *
@@ -80,8 +87,9 @@ public class NameFinderMain
 		}
 		catch (IOException e)
 		{
-			// Maneja errores relacionados con la carga del modelo o el procesamiento.
-			e.printStackTrace();
+			// En desarrollo: registrar detalles del error para depuración
+			LOGGER.log(Level.SEVERE, "Error loading the model: {0}", e.getMessage());
+
 		}
 		finally
 		{

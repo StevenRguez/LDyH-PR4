@@ -15,6 +15,10 @@ import opennlp.tools.chunker.DefaultChunkerContextGenerator;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
 import opennlp.tools.util.TrainingParameters;
+import org.fogbeam.example.opennlp.TokenizerMain;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @file ChunkerTrainer.java
@@ -25,10 +29,13 @@ import opennlp.tools.util.TrainingParameters;
  */
 public class ChunkerTrainer
 {
+	// Logger para el registro de mensajes
+	private static final Logger LOGGER = Logger.getLogger(ChunkerTrainer.class.getName());
+
 	/**
-	 * @brief Método principal para entrenar un modelo de fragmentación.
+	 * @brief Metodo principal para entrenar un modelo de fragmentación.
 	 *
-	 * Este método lee datos de entrenamiento en formato CoNLL2000, entrena un modelo de fragmentación
+	 * Este metodo lee datos de entrenamiento en formato CoNLL2000, entrena un modelo de fragmentación
 	 * utilizando OpenNLP y guarda el modelo generado en un archivo para su posterior uso.
 	 *
 	 * @param args Argumentos de línea de comandos (no utilizados).

@@ -7,6 +7,9 @@ import java.io.InputStream;
 import opennlp.tools.chunker.ChunkerME;
 import opennlp.tools.chunker.ChunkerModel;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * @file ChunkerMain.java
  * @brief Programa principal para realizar el análisis de fragmentos gramaticales (chunks) en una oración.
@@ -17,6 +20,9 @@ import opennlp.tools.chunker.ChunkerModel;
  */
 public class ChunkerMain
 {
+	// Logger para el registro de mensajes
+	private static final Logger LOGGER = Logger.getLogger(ChunkerMain.class.getName());
+
 	/**
 	 * @brief Metodo principal del programa.
 	 *
@@ -79,8 +85,11 @@ public class ChunkerMain
 		}
 		catch( IOException e )
 		{
-			// Maneja errores durante la carga del modelo.
-			e.printStackTrace();
+			// En desarrollo: registrar detalles del error para depuración
+			LOGGER.log(Level.SEVERE, "Error loading the model: {0}", e.getMessage());
+
+			// En producción: registrar de forma genérica
+			// LOGGER.log(Level.SEVERE, "Error loading the model.");
 		}
 		finally
 		{

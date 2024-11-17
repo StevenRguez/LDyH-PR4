@@ -7,6 +7,9 @@ import java.io.InputStream;
 import opennlp.tools.postag.POSModel;
 import opennlp.tools.postag.POSTaggerME;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * @file PartOfSpeechTaggerMain.java
  * @brief Programa principal para el etiquetado gramatical (POS tagging) de oraciones utilizando OpenNLP.
@@ -16,6 +19,10 @@ import opennlp.tools.postag.POSTaggerME;
  */
 public class PartOfSpeechTaggerMain
 {
+
+	// Logger para el registro de mensajes
+	private static final Logger LOGGER = Logger.getLogger(PartOfSpeechTaggerMain.class.getName());
+
 	/**
 	 * @brief Metodo principal del programa.
 	 *
@@ -65,8 +72,8 @@ public class PartOfSpeechTaggerMain
 		}
 		catch (IOException e)
 		{
-			// Maneja errores durante la carga del modelo o el etiquetado.
-			e.printStackTrace();
+			// En desarrollo: registrar detalles del error para depuración
+			LOGGER.log(Level.SEVERE, "Error loading the model: {0}", e.getMessage());
 		}
 		finally
 		{

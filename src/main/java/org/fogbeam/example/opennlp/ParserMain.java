@@ -10,6 +10,9 @@ import opennlp.tools.parser.Parser;
 import opennlp.tools.parser.ParserFactory;
 import opennlp.tools.parser.ParserModel;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * @file ParserMain.java
  * @brief Programa principal para el análisis sintáctico de oraciones utilizando OpenNLP.
@@ -19,6 +22,9 @@ import opennlp.tools.parser.ParserModel;
  */
 public class ParserMain
 {
+	// Logger para el registro de mensajes
+	private static final Logger LOGGER = Logger.getLogger(ParserMain.class.getName());
+
 	/**
 	 * @brief Metodo principal del programa.
 	 *
@@ -60,8 +66,8 @@ public class ParserMain
 		}
 		catch (IOException e)
 		{
-			// Maneja errores durante la carga del modelo o el análisis.
-			e.printStackTrace();
+			// En desarrollo: registrar detalles del error para depuración
+			LOGGER.log(Level.SEVERE, "Error loading the model: {0}", e.getMessage());
 		}
 		finally
 		{

@@ -24,9 +24,9 @@ import opennlp.tools.util.TrainingParameters;
 public class TokenizerTrainer {
 
 	/**
-	 * @brief Método principal para entrenar un modelo de tokenización.
+	 * @brief Metodo principal para entrenar un modelo de tokenización.
 	 *
-	 * Este método carga datos de entrenamiento, entrena un modelo de tokenización
+	 * Este metodo carga datos de entrenamiento, entrena un modelo de tokenización
 	 * y lo guarda en un archivo para su uso posterior.
 	 *
 	 * @param args Argumentos de línea de comandos (no utilizados).

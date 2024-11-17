@@ -13,6 +13,10 @@ import opennlp.tools.namefind.TokenNameFinderModel;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
 import opennlp.tools.util.TrainingParameters;
+import org.fogbeam.example.opennlp.ChunkerMain;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @file NameFinderTrainer.java
@@ -23,10 +27,13 @@ import opennlp.tools.util.TrainingParameters;
  */
 public class NameFinderTrainer
 {
+	// Logger para el registro de mensajes
+	private static final Logger LOGGER = Logger.getLogger(ChunkerMain.class.getName());
+
 	/**
-	 * @brief Método principal para entrenar un modelo de detección de nombres propios.
+	 * @brief Metodo principal para entrenar un modelo de detección de nombres propios.
 	 *
-	 * Este método utiliza datos de entrenamiento en formato de texto para crear un modelo
+	 * Este metodo utiliza datos de entrenamiento en formato de texto para crear un modelo
 	 * capaz de identificar entidades nombradas (nombres de personas) en un texto tokenizado.
 	 *
 	 * @param args Argumentos de línea de comandos (no utilizados).
