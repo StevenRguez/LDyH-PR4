@@ -30,14 +30,13 @@ public class DocumentClassifierMain
 	 * @param args Argumentos de línea de comandos (no utilizados en este programa).
 	 * @throws Exception En caso de errores durante la ejecución.
 	 */
-	public static void main( String[] args ) throws Exception
+	public static void main(String[] args) throws Exception
 	{
 		InputStream is = null; /**< Flujo de entrada para cargar el modelo de categorización. */
-
 		try
 		{
 			// Carga el modelo preentrenado de categorización de documentos desde un archivo.
-			is = new FileInputStream( "models/en-doccat.model" );
+			is = new FileInputStream("models/en-doccat.model");
 			DoccatModel m = new DoccatModel(is);
 
 			// Texto de entrada para clasificar.
@@ -52,10 +51,10 @@ public class DocumentClassifierMain
 			// Determina la categoría con mayor probabilidad.
 			String category = myCategorizer.getBestCategory(outcomes);
 
-			// Imprime la categoría más probable.
-			System.out.println( "Input classified as: " + category );
+			// Reemplaza el uso de System.out con el logger.
+			LOGGER.log(Level.INFO, "Input classified as: {0}", category);
 		}
-		catch( Exception e )
+		catch (Exception e)
 		{
 			// En desarrollo: registrar detalles del error para depuración
 			LOGGER.log(Level.SEVERE, "Error loading the model: {0}", e.getMessage());
@@ -63,14 +62,13 @@ public class DocumentClassifierMain
 		finally
 		{
 			// Cierra el flujo de entrada del modelo si está abierto.
-			if( is != null )
+			if (is != null)
 			{
 				is.close();
 			}
 		}
-
 		// Indica que el programa ha finalizado.
-		System.out.println( "done" );
+		LOGGER.log(Level.INFO, "done");
 	}
 }
 
