@@ -3,15 +3,15 @@ package org.fogbeam.example.opennlp;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import opennlp.tools.cmdline.parser.ParserTool;
+import opennlp.tools.parser.AbstractBottomUpParser;
 import opennlp.tools.parser.Parse;
 import opennlp.tools.parser.Parser;
 import opennlp.tools.parser.ParserFactory;
 import opennlp.tools.parser.ParserModel;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import opennlp.tools.util.Span;
 
 /**
  * @file ParserMain.java
@@ -26,9 +26,9 @@ public class ParserMain
 	private static final Logger LOGGER = Logger.getLogger(ParserMain.class.getName());
 
 	/**
-	 * @brief Metodo principal del programa.
+	 * @brief Método principal del programa.
 	 *
-	 * Este metodo carga un modelo de análisis sintáctico, analiza una oración de entrada y
+	 * Este método carga un modelo de análisis sintáctico, analiza una oración de entrada y
 	 * genera un árbol sintáctico que representa su estructura gramatical. También muestra
 	 * el árbol sintáctico en forma de texto y como un árbol codificado.
 	 *
@@ -38,7 +38,6 @@ public class ParserMain
 	public static void main(String[] args) throws Exception
 	{
 		InputStream modelIn = null; /**< Flujo de entrada para cargar el modelo de análisis sintáctico. */
-
 		try
 		{
 			// Carga el modelo preentrenado de análisis sintáctico desde un archivo.
@@ -49,24 +48,41 @@ public class ParserMain
 			Parser parser = ParserFactory.create(model);
 
 			// Oración de entrada para analizar.
-			String sentence = "The quick brown fox jumps over the lazy dog .";
+			String sentence = "The quick brown fox jumps over the lazy dog.";
+			String[] tokens = sentence.split(" "); // Tokenización básica
 
-			// Analiza la oración y obtiene las representaciones de los árboles sintácticos.
-			Parse topParses[] = ParserTool.parseLine(sentence, parser, 1);
+			// Construcción inicial del árbol sintáctico
+			Parse parse = new Parse(sentence,
+					new Span(0, sentence.length()),
+					AbstractBottomUpParser.INC_NODE,
+					1,
+					0);
 
-			// Selecciona el árbol sintáctico principal.
-			Parse parse = topParses[0];
+			// Insertar tokens en el árbol de análisis
+			int start = 0;
+			for (int i = 0; i < tokens.length; i++) {
+				int end = start + tokens[i].length();
+				parse.insert(new Parse(sentence,
+						new Span(start, end),
+						AbstractBottomUpParser.TOK_NODE,
+						1,
+						i));
+				start = end + 1; // Avanza al siguiente token (considera el espacio)
+			}
 
-			// Muestra el árbol sintáctico en formato de texto.
-			System.out.println(parse.toString());
+			// Procesa el análisis sintáctico
+			Parse result = parser.parse(parse);
 
-			// Muestra el árbol sintáctico en formato codificado (por ejemplo, para depuración).
-			parse.showCodeTree();
+			// Muestra el árbol de análisis en formato de texto
+			LOGGER.info("Parsed tree (text format): " + result.toString());
 
+			// Muestra el árbol de análisis en formato codificado
+			LOGGER.info("Parsed tree (encoded format):");
+			result.showCodeTree();
 		}
 		catch (IOException e)
 		{
-			// En desarrollo: registrar detalles del error para depuración
+			// Registrar detalles del error para depuración
 			LOGGER.log(Level.SEVERE, "Error loading the model: {0}", e.getMessage());
 		}
 		finally
@@ -80,12 +96,13 @@ public class ParserMain
 				}
 				catch (IOException e)
 				{
-					// Maneja errores al cerrar el flujo de entrada.
+					LOGGER.log(Level.WARNING, "Error closing the model stream: {0}", e.getMessage());
 				}
 			}
 		}
 
 		// Indica que el programa ha finalizado.
-		System.out.println("done");
+		LOGGER.info("Done");
 	}
 }
+
