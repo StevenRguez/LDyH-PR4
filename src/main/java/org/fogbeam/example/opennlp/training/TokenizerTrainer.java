@@ -14,7 +14,6 @@ import opennlp.tools.tokenize.TokenizerModel;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
 import opennlp.tools.util.TrainingParameters;
-import org.fogbeam.example.opennlp.TokenizerMain;
 
 /**
  * @file TokenizerTrainer.java
