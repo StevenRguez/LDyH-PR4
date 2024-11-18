@@ -13,7 +13,6 @@ import opennlp.tools.namefind.TokenNameFinderModel;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
 import opennlp.tools.util.TrainingParameters;
-import org.fogbeam.example.opennlp.ChunkerMain;
 
 import java.util.logging.Logger;
 
