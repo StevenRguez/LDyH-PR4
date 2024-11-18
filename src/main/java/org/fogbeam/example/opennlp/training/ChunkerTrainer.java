@@ -33,15 +33,17 @@ public class ChunkerTrainer {
 		Charset charset = Charset.forName("UTF-8"); /**< Codificación de los datos de entrenamiento. */
 
 		// Flujo de texto línea por línea a partir de los datos de entrenamiento.
-		ObjectStream<String> lineStream = new PlainTextByLineStream(
-				new FileInputStream("training_data/conll2000-chunker.train"), charset);
-
-		// Convierte las líneas en objetos ChunkSample para el entrenamiento.
-		ObjectStream<ChunkSample> sampleStream = new ChunkSampleStream(lineStream);
-
+		ObjectStream<String> lineStream = null;
+		ObjectStream<ChunkSample> sampleStream = null;
 		ChunkerModel model; /**< Modelo de fragmentación generado. */
 
 		try {
+			lineStream = new PlainTextByLineStream(
+					new FileInputStream("training_data/conll2000-chunker.train"), charset);
+
+			// Convierte las líneas en objetos ChunkSample para el entrenamiento.
+			sampleStream = new ChunkSampleStream(lineStream);
+
 			// Entrena el modelo utilizando los datos de entrada y un generador de contexto predeterminado.
 			model = ChunkerME.train(
 					"en",                                // Idioma del modelo.
@@ -49,27 +51,41 @@ public class ChunkerTrainer {
 					new DefaultChunkerContextGenerator(), // Generador de contexto para los fragmentos.
 					TrainingParameters.defaultParams()    // Parámetros de entrenamiento por defecto.
 			);
-		} finally {
-			// Cierra el flujo de datos de entrenamiento.
-			sampleStream.close();
-		}
 
-		OutputStream modelOut = null; /**< Flujo de salida para guardar el modelo entrenado. */
-		String modelFile = "models/en-chunker.model"; /**< Ruta del archivo donde se guardará el modelo. */
+			// Guardar el modelo entrenado.
+			saveModel(model, "models/en-chunker.model");
+
+			// Indica que el entrenamiento ha finalizado.
+			LOGGER.info(String.format("Entrenamiento completado. Modelo guardado en: %s", "models/en-chunker.model"));
+		} finally {
+			// Cierra los recursos solo si fueron inicializados.
+			if (sampleStream != null) {
+				sampleStream.close();
+			}
+			if (lineStream != null) {
+				lineStream.close();
+			}
+		}
+	}
+
+	/**
+	 * Guarda el modelo entrenado en un archivo.
+	 *
+	 * @param model Modelo de fragmentación a guardar.
+	 * @param modelFile Ruta del archivo donde se guardará el modelo.
+	 * @throws IOException En caso de errores durante la escritura.
+	 */
+	private static void saveModel(ChunkerModel model, String modelFile) throws IOException {
+		OutputStream modelOut = null;
 
 		try {
-			// Guarda el modelo entrenado en un archivo.
 			modelOut = new BufferedOutputStream(new FileOutputStream(modelFile));
 			model.serialize(modelOut);
 		} finally {
-			// Cierra el flujo de salida si está abierto.
+			// Cierra el flujo de salida solo si fue inicializado.
 			if (modelOut != null) {
 				modelOut.close();
 			}
 		}
-
-		// Indica que el entrenamiento ha finalizado.
-		LOGGER.info(String.format("Entrenamiento completado. Modelo guardado en: %s", modelFile));
 	}
 }
-
