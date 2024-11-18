@@ -19,14 +19,13 @@ import java.util.logging.Logger;
  */
 public class PartOfSpeechTaggerMain
 {
-
 	// Logger para el registro de mensajes
 	private static final Logger LOGGER = Logger.getLogger(PartOfSpeechTaggerMain.class.getName());
 
 	/**
-	 * @brief Metodo principal del programa.
+	 * @brief Método principal del programa.
 	 *
-	 * Este metodo carga un modelo de etiquetado gramatical, procesa una oración tokenizada y
+	 * Este método carga un modelo de etiquetado gramatical, procesa una oración tokenizada y
 	 * genera etiquetas gramaticales (POS) para cada token, junto con las probabilidades asociadas.
 	 *
 	 * @param args Argumentos de línea de comandos (no utilizados en este programa).
@@ -38,7 +37,6 @@ public class PartOfSpeechTaggerMain
 		try
 		{
 			// Carga el modelo preentrenado de etiquetado gramatical desde un archivo.
-			// modelIn = new FileInputStream( "models/en-pos.model" );
 			modelIn = new FileInputStream("models/en-pos-maxent.bin");
 
 			// Inicializa el modelo de etiquetado gramatical.
@@ -48,17 +46,17 @@ public class PartOfSpeechTaggerMain
 			POSTaggerME tagger = new POSTaggerME(model);
 
 			// Tokens de entrada que representan una oración tokenizada.
-			String sent[] = new String[]{"Most", "large", "cities", "in", "the", "US", "had",
+			String[] sent = new String[]{"Most", "large", "cities", "in", "the", "US", "had",
 					"morning", "and", "afternoon", "newspapers", "."};
 
 			// Genera etiquetas gramaticales para los tokens de entrada.
-			String tags[] = tagger.tag(sent);
+			String[] tags = tagger.tag(sent);
 
 			// Obtiene las probabilidades asociadas a las etiquetas generadas.
-			double probs[] = tagger.probs();
+			double[] probs = tagger.probs();
 
 			/**
-			 * Imprime los resultados para cada token.
+			 * Registra los resultados para cada token.
 			 * Muestra:
 			 * - El token original.
 			 * - Su etiqueta gramatical (POS tag).
@@ -66,7 +64,8 @@ public class PartOfSpeechTaggerMain
 			 */
 			for (int i = 0; i < sent.length; i++)
 			{
-				System.out.println("Token [" + sent[i] + "] has POS [" + tags[i] + "] with probability = " + probs[i]);
+				LOGGER.info(String.format("Token [%s] has POS [%s] with probability = %.4f",
+						sent[i], tags[i], probs[i]));
 			}
 
 		}
@@ -86,12 +85,12 @@ public class PartOfSpeechTaggerMain
 				}
 				catch (IOException e)
 				{
-					// Maneja errores al cerrar el flujo de entrada.
+					LOGGER.log(Level.WARNING, "Error closing the model stream: {0}", e.getMessage());
 				}
 			}
 		}
 
 		// Indica que el programa ha finalizado.
-		System.out.println("done");
+		LOGGER.info("Done");
 	}
 }
