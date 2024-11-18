@@ -28,8 +28,7 @@ import java.util.logging.Logger;
  * aplica un modelo de tokenización para separar el texto en tokens, y guarda el resultado
  * en un archivo de salida único.
  */
-public class TokenizerMain
-{
+public class TokenizerMain {
 	// Logger para el registro de mensajes
 	private static final Logger LOGGER = Logger.getLogger(TokenizerMain.class.getName());
 
@@ -45,12 +44,10 @@ public class TokenizerMain
 	 *             - Último argumento debe ser el nombre del archivo de salida.
 	 * @throws Exception En caso de errores durante la ejecución.
 	 */
-	public static void main(String[] args) throws Exception
-	{
+	public static void main(String[] args) throws Exception {
 		// Validar que se hayan proporcionado al menos un archivo de entrada y uno de salida.
-		if (args.length < 2)
-		{
-			System.err.println("Uso: java TokenizerMain <archivo1> <archivo2> ... <archivoSalida>");
+		if (args.length < 2) {
+			LOGGER.severe("Uso: java TokenizerMain <archivo1> <archivo2> ... <archivoSalida>");
 			System.exit(1);
 		}
 
@@ -59,8 +56,7 @@ public class TokenizerMain
 
 		// Lista de archivos de entrada.
 		List<File> inputFiles = new ArrayList<>();
-		for (int i = 0; i < args.length - 1; i++)
-		{
+		for (int i = 0; i < args.length - 1; i++) {
 			inputFiles.add(new File(args[i]));
 		}
 
@@ -69,14 +65,11 @@ public class TokenizerMain
 		TokenizerModel model = new TokenizerModel(modelIn);
 		Tokenizer tokenizer = new TokenizerME(model);
 
-		try (FileWriter writer = new FileWriter(outputFileName))
-		{
+		try (FileWriter writer = new FileWriter(outputFileName)) {
 			// Procesar cada archivo de entrada.
-			for (File inputFile : inputFiles)
-			{
-				if (!inputFile.exists())
-				{
-					System.err.println("El archivo " + inputFile.getName() + " no existe. Se omitirá.");
+			for (File inputFile : inputFiles) {
+				if (!inputFile.exists()) {
+					LOGGER.warning("El archivo " + inputFile.getName() + " no existe. Se omitirá.");
 					continue;
 				}
 
@@ -87,28 +80,21 @@ public class TokenizerMain
 				String[] tokens = tokenizer.tokenize(content);
 
 				// Escribir los tokens en el archivo de salida.
-				for (String token : tokens)
-				{
+				for (String token : tokens) {
 					writer.write(token + "\n");
 				}
 				writer.write("\n"); // Separador entre archivos.
 			}
 		}
-		catch (IOException e)
-		{
-			// En desarrollo: registrar detalles del error para depuración
-			LOGGER.log(Level.SEVERE, "Error loading the model: {0}", e.getMessage());
-
-		}
-		finally
-		{
-			if (modelIn != null)
-			{
+		catch (IOException e) {
+			// Registrar detalles del error para depuración
+			LOGGER.log(Level.SEVERE, "Error al procesar los archivos: {0}", e.getMessage());
+		} finally {
+			if (modelIn != null) {
 				modelIn.close();
 			}
 		}
-
-		System.out.println("Tokenización completada. Resultado guardado en: " + outputFileName);
+		LOGGER.info("Tokenización completada. Resultado guardado en: " + outputFileName);
 	}
 
 	/**
@@ -120,14 +106,12 @@ public class TokenizerMain
 	 * @return Contenido del archivo como cadena.
 	 * @throws IOException En caso de errores al leer el archivo.
 	 */
-	private static String readFileContent(File file) throws IOException
-	{
+	private static String readFileContent(File file) throws IOException {
 		StringBuilder content = new StringBuilder();
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8")))
 		{
 			String line;
-			while ((line = reader.readLine()) != null)
-			{
+			while ((line = reader.readLine()) != null) {
 				content.append(line).append("\n");
 			}
 		}
