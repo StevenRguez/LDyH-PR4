@@ -25,7 +25,7 @@ import org.fogbeam.example.opennlp.TokenizerMain;
  */
 public class TokenizerTrainer {
 	// Logger para el registro de mensajes
-	private static final Logger LOGGER = Logger.getLogger(TokenizerMain.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(TokenizerTrainer.class.getName());
 
 	/**
 	 * @brief Metodo principal para entrenar un modelo de tokenización.
