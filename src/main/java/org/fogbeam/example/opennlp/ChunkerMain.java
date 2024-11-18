@@ -18,8 +18,7 @@ import java.util.logging.Logger;
  * procesar una oración tokenizada con etiquetas POS y determinar las
  * estructuras gramaticales, como frases nominales y verbales.
  */
-public class ChunkerMain
-{
+public class ChunkerMain {
 	// Logger para el registro de mensajes
 	private static final Logger LOGGER = Logger.getLogger(ChunkerMain.class.getName());
 
@@ -32,13 +31,11 @@ public class ChunkerMain
 	 * @param args Argumentos de línea de comandos (no utilizados en este programa).
 	 * @throws Exception En caso de que ocurra un error inesperado.
 	 */
-	public static void main( String[] args ) throws Exception
-	{
+	public static void main( String[] args ) throws Exception {
 		InputStream modelIn = null;  /**< Flujo de entrada para cargar el modelo de fragmentación. */
 		ChunkerModel model = null;  /**< Modelo de fragmentación cargado desde el archivo. */
 
-		try
-		{
+		try {
 			// Carga el modelo preentrenado de fragmentación desde un archivo.
 			modelIn = new FileInputStream( "models/en-chunker.model" );
 			model = new ChunkerModel( modelIn );
@@ -47,7 +44,7 @@ public class ChunkerMain
 			ChunkerME chunker = new ChunkerME(model);
 
 			// Tokens de ejemplo de una oración (normalmente generados por un tokenizador).
-			String sent[] = new String[] {
+			String[] sent = new String[] {
 					"Rockwell", "International", "Corp.", "'s", "Tulsa", "unit",
 					"said", "it", "signed", "a", "tentative", "agreement",
 					"extending", "its", "contract", "with", "Boeing", "Co.", "to",
@@ -56,7 +53,7 @@ public class ChunkerMain
 			};
 
 			// Etiquetas gramaticales (POS tags) correspondientes a los tokens.
-			String pos[] = new String[] {
+			String[] pos = new String[] {
 					"NNP", "NNP", "NNP", "POS", "NNP", "NN",
 					"VBD", "PRP", "VBD", "DT", "JJ", "NN",
 					"VBG", "PRP$", "NN", "IN", "NNP", "NNP", "TO",
@@ -65,8 +62,8 @@ public class ChunkerMain
 			};
 
 			// Realiza el análisis de fragmentos.
-			String tag[] = chunker.chunk(sent, pos);  /**< Etiquetas de fragmentos generadas para los tokens. */
-			double probs[] = chunker.probs();        /**< Probabilidades asociadas a las etiquetas. */
+			String[] tag = chunker.chunk(sent, pos);  /**< Etiquetas de fragmentos generadas para los tokens. */
+			double[] probs = chunker.probs();        /**< Probabilidades asociadas a las etiquetas. */
 
 			/**
 			 * Los fragmentos generados contienen etiquetas que representan el tipo de estructura gramatical.
@@ -77,32 +74,24 @@ public class ChunkerMain
 			 */
 
 			// Imprime los resultados del análisis para cada token.
-			for( int i = 0; i < sent.length; i++ )
-			{
+			for( int i = 0; i < sent.length; i++ ) {
 				System.out.println( "Token ["+ sent[i] + "] has chunk tag [" + tag[i] + "] with probability = " + probs[i] );
 			}
 
-		}
-		catch( IOException e )
-		{
+		} catch( IOException e ) {
 			// En desarrollo: registrar detalles del error para depuración
 			LOGGER.log(Level.SEVERE, "Error loading the model: {0}", e.getMessage());
 
 			// En producción: registrar de forma genérica
 			// LOGGER.log(Level.SEVERE, "Error loading the model.");
-		}
-		finally
-		{
+		} finally {
 			// Cierra el flujo de entrada del modelo si está abierto.
-			if( modelIn != null )
-			{
+			if (modelIn != null) {
 				try
 				{
 					modelIn.close();
 				}
-				catch( IOException e )
-				{
-				}
+				catch(IOException e) {}
 			}
 		}
 
