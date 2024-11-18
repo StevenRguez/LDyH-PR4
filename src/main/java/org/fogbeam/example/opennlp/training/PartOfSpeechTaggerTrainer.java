@@ -15,7 +15,6 @@ import opennlp.tools.postag.WordTagSampleStream;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
 import opennlp.tools.util.TrainingParameters;
-import org.fogbeam.example.opennlp.ChunkerMain;
 
 import java.util.logging.Logger;
 
@@ -31,7 +30,7 @@ public class PartOfSpeechTaggerTrainer {
 	// Logger para el registro de mensajes
 	private static final Logger LOGGER = Logger.getLogger(PartOfSpeechTaggerTrainer.class.getName());
 	// Constante para el mensaje de error
-	private static final String error = "Error loading the model: {0}";
+	private static final String Error = "Error loading the model: {0}";
 	/**
 	 * @brief Metodo principal para entrenar un modelo de etiquetado gramatical (POS).
 	 *
@@ -63,7 +62,7 @@ public class PartOfSpeechTaggerTrainer {
 			);
 		} catch (IOException e) {
 			// En desarrollo: registrar detalles del error para depuración
-			LOGGER.log(Level.SEVERE, error, e.getMessage());
+			LOGGER.log(Level.SEVERE, Error, e.getMessage());
 		} finally {
 			// Cierra el flujo de datos de entrada si está abierto.
 			if (dataIn != null) {
@@ -71,7 +70,7 @@ public class PartOfSpeechTaggerTrainer {
 					dataIn.close();
 				} catch (IOException e) {
 					// En desarrollo: registrar detalles del error para depuración
-					LOGGER.log(Level.SEVERE, error, e.getMessage());
+					LOGGER.log(Level.SEVERE, Error, e.getMessage());
 				}
 			}
 		}
@@ -85,7 +84,7 @@ public class PartOfSpeechTaggerTrainer {
 			model.serialize(modelOut);
 		} catch (IOException e) {
 			// En desarrollo: registrar detalles del error para depuración
-			LOGGER.log(Level.SEVERE, error, e.getMessage());
+			LOGGER.log(Level.SEVERE, Error, e.getMessage());
 		} finally {
 			// Cierra el flujo de salida si está abierto.
 			if (modelOut != null) {
@@ -93,7 +92,7 @@ public class PartOfSpeechTaggerTrainer {
 					modelOut.close();
 				} catch (IOException e) {
 					// En desarrollo: registrar detalles del error para depuración
-					LOGGER.log(Level.SEVERE, error, e.getMessage());
+					LOGGER.log(Level.SEVERE, Error, e.getMessage());
 				}
 			}
 		}
