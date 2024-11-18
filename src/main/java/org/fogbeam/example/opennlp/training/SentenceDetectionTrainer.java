@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
+import java.util.logging.Logger;
 
 import opennlp.tools.sentdetect.SentenceDetectorME;
 import opennlp.tools.sentdetect.SentenceModel;
@@ -24,6 +25,8 @@ import opennlp.tools.util.TrainingParameters;
  * oraciones individuales.
  */
 public class SentenceDetectionTrainer {
+	// Logger para el registro de mensajes
+	private static final Logger LOGGER = Logger.getLogger(SentenceDetectionTrainer.class.getName());
 
 	/**
 	 * @brief Metodo principal para entrenar un modelo de detección de oraciones.
@@ -72,8 +75,8 @@ public class SentenceDetectionTrainer {
 				modelOut.close();
 		}
 
-		// Indica que el entrenamiento y guardado del modelo han finalizado con éxito.
-		System.out.println("done");
+		// Indica que el entrenamiento ha finalizado correctamente.
+		LOGGER.info("Entrenamiento completado correctamente.");
 	}
 }
 

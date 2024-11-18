@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
+import java.util.logging.Logger;
 
 import opennlp.tools.tokenize.TokenSample;
 import opennlp.tools.tokenize.TokenSampleStream;
@@ -13,6 +14,7 @@ import opennlp.tools.tokenize.TokenizerModel;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
 import opennlp.tools.util.TrainingParameters;
+import org.fogbeam.example.opennlp.TokenizerMain;
 
 /**
  * @file TokenizerTrainer.java
@@ -22,6 +24,8 @@ import opennlp.tools.util.TrainingParameters;
  * que puede dividir textos en tokens, tales como palabras o puntuaciones.
  */
 public class TokenizerTrainer {
+	// Logger para el registro de mensajes
+	private static final Logger LOGGER = Logger.getLogger(TokenizerMain.class.getName());
 
 	/**
 	 * @brief Metodo principal para entrenar un modelo de tokenización.
@@ -71,8 +75,8 @@ public class TokenizerTrainer {
 			}
 		}
 
-		// Indica que el proceso de entrenamiento y guardado ha finalizado.
-		System.out.println("done");
+		// Indica que el entrenamiento ha finalizado correctamente.
+		LOGGER.info("Entrenamiento completado correctamente.");
 	}
 }
 
