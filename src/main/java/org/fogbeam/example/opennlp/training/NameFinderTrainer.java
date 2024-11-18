@@ -15,7 +15,6 @@ import opennlp.tools.util.PlainTextByLineStream;
 import opennlp.tools.util.TrainingParameters;
 import org.fogbeam.example.opennlp.ChunkerMain;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -28,7 +27,7 @@ import java.util.logging.Logger;
 public class NameFinderTrainer
 {
 	// Logger para el registro de mensajes
-	private static final Logger LOGGER = Logger.getLogger(ChunkerMain.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(NameFinderTrainer.class.getName());
 
 	/**
 	 * @brief Metodo principal para entrenar un modelo de detección de nombres propios.
@@ -90,7 +89,7 @@ public class NameFinderTrainer
 		}
 
 		// Indica que el entrenamiento ha finalizado correctamente.
-		System.out.println("done");
+		LOGGER.info("Entrenamiento completado correctamente.");
 	}
 }
 
