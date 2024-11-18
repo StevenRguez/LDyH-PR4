@@ -9,6 +9,7 @@ import opennlp.tools.sentdetect.SentenceModel;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Scanner;
 
 /**
  * @file SentenceDetectionMain.java
@@ -17,11 +18,10 @@ import java.util.logging.Logger;
  * Este programa carga un modelo preentrenado de detección de oraciones, procesa un texto
  * de entrada y divide el contenido en oraciones individuales.
  */
-public class SentenceDetectionMain
-{
+public class SentenceDetectionMain {
 
 	// Logger para el registro de mensajes
-	private static final Logger LOGGER = Logger.getLogger(PartOfSpeechTaggerMain.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(SentenceDetectionMain.class.getName());
 
 	/**
 	 * @brief Metodo principal del programa.
@@ -32,13 +32,11 @@ public class SentenceDetectionMain
 	 * @param args Argumentos de línea de comandos (no utilizados en este programa).
 	 * @throws Exception En caso de errores durante la ejecución.
 	 */
-	public static void main(String[] args) throws Exception
-	{
+	public static void main(String[] args) throws Exception {
 		InputStream modelIn = null;     /**< Flujo de entrada para cargar el modelo de detección de oraciones. */
 		InputStream demoDataIn = null; /**< Flujo de entrada para leer los datos de demostración. */
 
-		try
-		{
+		try {
 			// Carga el modelo preentrenado de detección de oraciones desde un archivo.
 			modelIn = new FileInputStream("models/en-sent.model");
 			SentenceModel model = new SentenceModel(modelIn);
@@ -51,51 +49,37 @@ public class SentenceDetectionMain
 			String demoData = convertStreamToString(demoDataIn);
 
 			// Detecta oraciones en el texto de entrada.
-			String sentences[] = sentenceDetector.sentDetect(demoData);
+			String[] sentences = sentenceDetector.sentDetect(demoData);
 
-			// Imprime cada oración detectada.
-			for (String sentence : sentences)
-			{
-				System.out.println(sentence + "\n");
+			// Registra cada oración detectada.
+			for (String sentence : sentences) {
+				LOGGER.info(sentence);
 			}
 
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 			// En desarrollo: registrar detalles del error para depuración
-			LOGGER.log(Level.SEVERE, "Error loading the model: {0}", e.getMessage());
-
-		}
-		finally
-		{
+			LOGGER.log(Level.SEVERE, "Error loading the model or reading input data: {0}", e.getMessage());
+		} finally {
 			// Cierra los flujos de entrada si están abiertos.
-			if (modelIn != null)
-			{
-				try
-				{
+			if (modelIn != null) {
+				try {
 					modelIn.close();
-				}
-				catch (IOException e)
-				{
-					// Maneja errores al cerrar el flujo del modelo.
+				} catch (IOException e) {
+					LOGGER.log(Level.WARNING, "Error closing the model stream: {0}", e.getMessage());
 				}
 			}
 
-			if (demoDataIn != null)
-			{
-				try
-				{
+			if (demoDataIn != null) {
+				try {
 					demoDataIn.close();
-				}
-				catch (IOException e)
-				{
-					// Maneja errores al cerrar el flujo de datos de demostración.
+				} catch (IOException e) {
+					LOGGER.log(Level.WARNING, "Error closing the demo data stream: {0}", e.getMessage());
 				}
 			}
 		}
 
 		// Indica que el programa ha finalizado.
-		System.out.println("done");
+		LOGGER.info("Program completed successfully.");
 	}
 
 	/**
@@ -107,9 +91,9 @@ public class SentenceDetectionMain
 	 * @param is Flujo de entrada a convertir.
 	 * @return El contenido del flujo de entrada como una cadena.
 	 */
-	static String convertStreamToString(java.io.InputStream is)
-	{
-		java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
+	static String convertStreamToString(InputStream is) {
+		Scanner s = new Scanner(is).useDelimiter("\\A");
 		return s.hasNext() ? s.next() : "";
 	}
 }
+
