@@ -1,21 +1,14 @@
 package org.fogbeam.example.opennlp;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import opennlp.tools.tokenize.Tokenizer;
 import opennlp.tools.tokenize.TokenizerME;
 import opennlp.tools.tokenize.TokenizerModel;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 // Ejemplo de uso: java TokenizerMain input1.txt input2.txt input3.txt output.txt
 // mvn exec:java -Dexec.mainClass="org.fogbeam.example.opennlp.TokenizerMain" -Dexec.args="training_data/en-doccat.train salida.txt"
@@ -69,7 +62,7 @@ public class TokenizerMain {
 			// Procesar cada archivo de entrada.
 			for (File inputFile : inputFiles) {
 				if (!inputFile.exists()) {
-					LOGGER.warning("El archivo " + inputFile.getName() + " no existe. Se omitirá.");
+					LOGGER.warning(() -> String.format("El archivo %s no existe. Se omitirá.", inputFile.getName()));
 					continue;
 				}
 
@@ -85,16 +78,17 @@ public class TokenizerMain {
 				}
 				writer.write("\n"); // Separador entre archivos.
 			}
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			// Registrar detalles del error para depuración
 			LOGGER.log(Level.SEVERE, "Error al procesar los archivos: {0}", e.getMessage());
-		} finally {
+		}
+		finally {
 			if (modelIn != null) {
 				modelIn.close();
 			}
 		}
-		LOGGER.info("Tokenización completada. Resultado guardado en: " + outputFileName);
+
+		LOGGER.info(() -> String.format("Tokenización completada. Resultado guardado en: %s", outputFileName));
 	}
 
 	/**
@@ -111,7 +105,8 @@ public class TokenizerMain {
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8")))
 		{
 			String line;
-			while ((line = reader.readLine()) != null) {
+			while ((line = reader.readLine()) != null)
+			{
 				content.append(line).append("\n");
 			}
 		}
