@@ -10,15 +10,6 @@ import opennlp.tools.postag.POSTaggerME;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import opennlp.tools.postag.POSModel;
-import opennlp.tools.postag.POSTaggerME;
-
 /**
  * @file PartOfSpeechTaggerMain.java
  * @brief Programa principal para el etiquetado gramatical (POS tagging) de oraciones utilizando OpenNLP.
