@@ -30,7 +30,7 @@ public class PartOfSpeechTaggerTrainer {
 	// Logger para el registro de mensajes
 	private static final Logger LOGGER = Logger.getLogger(PartOfSpeechTaggerTrainer.class.getName());
 	// Constante para el mensaje de error
-	private static final String Error_ = "Error loading the model: {0}";
+	private static final String ERROR = "Error loading the model: {0}";
 	/**
 	 * @brief Metodo principal para entrenar un modelo de etiquetado gramatical (POS).
 	 *
@@ -62,7 +62,7 @@ public class PartOfSpeechTaggerTrainer {
 			);
 		} catch (IOException e) {
 			// En desarrollo: registrar detalles del error para depuración
-			LOGGER.log(Level.SEVERE, Error_, e.getMessage());
+			LOGGER.log(Level.SEVERE, ERROR, e.getMessage());
 		} finally {
 			// Cierra el flujo de datos de entrada si está abierto.
 			if (dataIn != null) {
@@ -70,7 +70,7 @@ public class PartOfSpeechTaggerTrainer {
 					dataIn.close();
 				} catch (IOException e) {
 					// En desarrollo: registrar detalles del error para depuración
-					LOGGER.log(Level.SEVERE, Error_, e.getMessage());
+					LOGGER.log(Level.SEVERE, ERROR, e.getMessage());
 				}
 			}
 		}
@@ -84,7 +84,7 @@ public class PartOfSpeechTaggerTrainer {
 			model.serialize(modelOut);
 		} catch (IOException e) {
 			// En desarrollo: registrar detalles del error para depuración
-			LOGGER.log(Level.SEVERE, Error_, e.getMessage());
+			LOGGER.log(Level.SEVERE, ERROR, e.getMessage());
 		} finally {
 			// Cierra el flujo de salida si está abierto.
 			if (modelOut != null) {
@@ -92,7 +92,7 @@ public class PartOfSpeechTaggerTrainer {
 					modelOut.close();
 				} catch (IOException e) {
 					// En desarrollo: registrar detalles del error para depuración
-					LOGGER.log(Level.SEVERE, Error_, e.getMessage());
+					LOGGER.log(Level.SEVERE, ERROR, e.getMessage());
 				}
 			}
 		}
