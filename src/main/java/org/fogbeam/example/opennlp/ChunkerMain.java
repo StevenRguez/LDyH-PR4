@@ -37,14 +37,14 @@ public class ChunkerMain {
 
 		try {
 			// Carga el modelo preentrenado de fragmentación desde un archivo.
-			modelIn = new FileInputStream( "models/en-chunker.model" );
-			model = new ChunkerModel( modelIn );
+			modelIn = new FileInputStream("models/en-chunker.model");
+			model = new ChunkerModel(modelIn);
 
 			// Inicializa el motor de fragmentación con el modelo cargado.
 			ChunkerME chunker = new ChunkerME(model);
 
 			// Tokens de ejemplo de una oración (normalmente generados por un tokenizador).
-			String[] sent = new String[] {
+			String[] sent = new String[]{
 					"Rockwell", "International", "Corp.", "'s", "Tulsa", "unit",
 					"said", "it", "signed", "a", "tentative", "agreement",
 					"extending", "its", "contract", "with", "Boeing", "Co.", "to",
@@ -53,7 +53,7 @@ public class ChunkerMain {
 			};
 
 			// Etiquetas gramaticales (POS tags) correspondientes a los tokens.
-			String[] pos = new String[] {
+			String[] pos = new String[]{
 					"NNP", "NNP", "NNP", "POS", "NNP", "NN",
 					"VBD", "PRP", "VBD", "DT", "JJ", "NN",
 					"VBG", "PRP$", "NN", "IN", "NNP", "NNP", "TO",
@@ -74,16 +74,12 @@ public class ChunkerMain {
 			 */
 
 			// Imprime los resultados del análisis para cada token.
-			for( int i = 0; i < sent.length; i++ ) {
-				System.out.println( "Token ["+ sent[i] + "] has chunk tag [" + tag[i] + "] with probability = " + probs[i] );
+			for (int i = 0; i < sent.length; i++) {
+				LOGGER.log(Level.INFO, "Token [{0}] has chunk tag [{1}] with probability = {2}", new Object[]{sent[i], tag[i], probs[i]});
 			}
-
 		} catch( IOException e ) {
 			// En desarrollo: registrar detalles del error para depuración
 			LOGGER.log(Level.SEVERE, "Error loading the model: {0}", e.getMessage());
-
-			// En producción: registrar de forma genérica
-			// LOGGER.log(Level.SEVERE, "Error loading the model.");
 		} finally {
 			// Cierra el flujo de entrada del modelo si está abierto.
 			if (modelIn != null) {
@@ -98,6 +94,6 @@ public class ChunkerMain {
 		}
 
 		// Indica que el programa ha finalizado.
-		System.out.println( "done" );
+		LOGGER.log(Level.INFO, "done");
 	}
 }
