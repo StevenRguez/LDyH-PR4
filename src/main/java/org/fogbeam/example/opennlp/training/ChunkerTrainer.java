@@ -55,11 +55,9 @@ public class ChunkerTrainer {
 			// Guardar el modelo entrenado.
 			saveModel(model, "models/en-chunker.model");
 
-			// Indica que el entrenamiento ha finalizado solo si el modelo fue generado.
-			if (model != null) {
+			// Indica que el entrenamiento ha finalizado.
+			if (LOGGER.isLoggable(java.util.logging.Level.INFO)) {
 				LOGGER.info(String.format("Entrenamiento completado. Modelo guardado en: %s", "models/en-chunker.model"));
-			} else {
-				LOGGER.warning("El entrenamiento no se completó correctamente. No se generó ningún modelo.");
 			}
 		} finally {
 			// Cierra los recursos solo si fueron inicializados.
