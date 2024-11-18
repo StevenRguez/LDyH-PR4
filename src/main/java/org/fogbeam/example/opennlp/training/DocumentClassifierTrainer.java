@@ -13,7 +13,6 @@ import opennlp.tools.doccat.DocumentSample;
 import opennlp.tools.doccat.DocumentSampleStream;
 import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
-import org.fogbeam.example.opennlp.ChunkerMain;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,10 +24,12 @@ import java.util.logging.Logger;
  * Esta clase utiliza datos de entrenamiento en formato de texto para generar un modelo
  * de clasificación de documentos basado en categorías predefinidas.
  */
-public class DocumentClassifierTrainer
-{
+public class DocumentClassifierTrainer {
 	// Logger para el registro de mensajes
-	private static final Logger LOGGER = Logger.getLogger(ChunkerMain.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(DocumentClassifierTrainer.class.getName());
+
+	// Constante para el mensaje de error
+	private static final String ERROR_LOADING_MODEL = "Error loading the model: {0}";
 
 	/**
 	 * @brief Metodo principal para entrenar un modelo de clasificación de documentos.
@@ -40,13 +41,11 @@ public class DocumentClassifierTrainer
 	 * @param args Argumentos de línea de comandos (no utilizados).
 	 * @throws Exception En caso de errores durante la ejecución.
 	 */
-	public static void main(String[] args) throws Exception
-	{
+	public static void main(String[] args) {
 		DoccatModel model = null; /**< Modelo de clasificación de documentos generado. */
 		InputStream dataIn = null; /**< Flujo de entrada para leer los datos de entrenamiento. */
 
-		try
-		{
+		try {
 			// Carga los datos de entrenamiento desde un archivo.
 			dataIn = new FileInputStream("training_data/en-doccat.train");
 
@@ -59,25 +58,17 @@ public class DocumentClassifierTrainer
 					"en",          // Idioma del modelo.
 					sampleStream   // Flujo de datos de entrenamiento.
 			);
-		}
-		catch (IOException e)
-		{
-			// En desarrollo: registrar detalles del error para depuración
-			LOGGER.log(Level.SEVERE, "Error loading the model: {0}", e.getMessage());
-		}
-		finally
-		{
+		} catch (IOException e) {
+			// Registrar detalles del error
+			LOGGER.log(Level.SEVERE, ERROR_LOADING_MODEL, e.getMessage());
+		} finally {
 			// Cierra el flujo de entrada si está abierto.
-			if (dataIn != null)
-			{
-				try
-				{
+			if (dataIn != null) {
+				try {
 					dataIn.close();
-				}
-				catch (IOException e)
-				{
-					// En desarrollo: registrar detalles del error para depuración
-					LOGGER.log(Level.SEVERE, "Error loading the model: {0}", e.getMessage());
+				} catch (IOException e) {
+					// Registrar detalles del error
+					LOGGER.log(Level.SEVERE, ERROR_LOADING_MODEL, e.getMessage());
 				}
 			}
 		}
@@ -85,36 +76,28 @@ public class DocumentClassifierTrainer
 		OutputStream modelOut = null; /**< Flujo de salida para guardar el modelo entrenado. */
 		String modelFile = "models/en-doccat.model"; /**< Ruta del archivo donde se guardará el modelo. */
 
-		try
-		{
+		try {
 			// Guarda el modelo entrenado en un archivo.
 			modelOut = new BufferedOutputStream(new FileOutputStream(modelFile));
 			model.serialize(modelOut);
-		}
-		catch (IOException e)
-		{
-			// En desarrollo: registrar detalles del error para depuración
-			LOGGER.log(Level.SEVERE, "Error loading the model: {0}", e.getMessage());
-		}
-		finally
-		{
+		} catch (IOException e) {
+			// Registrar detalles del error
+			LOGGER.log(Level.SEVERE, ERROR_LOADING_MODEL, e.getMessage());
+		} finally {
 			// Cierra el flujo de salida si está abierto.
-			if (modelOut != null)
-			{
-				try
-				{
+			if (modelOut != null) {
+				try {
 					modelOut.close();
-				}
-				catch (IOException e)
-				{
-					// En desarrollo: registrar detalles del error para depuración
-					LOGGER.log(Level.SEVERE, "Error loading the model: {0}", e.getMessage());
+				} catch (IOException e) {
+					// Registrar detalles del error
+					LOGGER.log(Level.SEVERE, ERROR_LOADING_MODEL, e.getMessage());
 				}
 			}
 		}
 
 		// Indica que el entrenamiento ha finalizado correctamente.
-		System.out.println("done");
+		LOGGER.info("Entrenamiento completado correctamente.");
 	}
 }
+
 
