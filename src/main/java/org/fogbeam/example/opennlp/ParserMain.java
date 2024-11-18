@@ -20,26 +20,23 @@ import opennlp.tools.util.Span;
  * Este programa carga un modelo de análisis sintáctico, procesa una oración de entrada
  * y genera un árbol sintáctico que describe su estructura gramatical.
  */
-public class ParserMain
-{
+public class ParserMain {
 	// Logger para el registro de mensajes
 	private static final Logger LOGGER = Logger.getLogger(ParserMain.class.getName());
 
 	/**
-	 * @brief Método principal del programa.
+	 * @brief Metodo principal del programa.
 	 *
-	 * Este método carga un modelo de análisis sintáctico, analiza una oración de entrada y
+	 * Este metodo carga un modelo de análisis sintáctico, analiza una oración de entrada y
 	 * genera un árbol sintáctico que representa su estructura gramatical. También muestra
 	 * el árbol sintáctico en forma de texto y como un árbol codificado.
 	 *
 	 * @param args Argumentos de línea de comandos (no utilizados en este programa).
 	 * @throws Exception En caso de errores durante la ejecución.
 	 */
-	public static void main(String[] args) throws Exception
-	{
+	public static void main(String[] args) throws Exception {
 		InputStream modelIn = null; /**< Flujo de entrada para cargar el modelo de análisis sintáctico. */
-		try
-		{
+		try {
 			// Carga el modelo preentrenado de análisis sintáctico desde un archivo.
 			modelIn = new FileInputStream("models/en-parser-chunking.bin");
 			ParserModel model = new ParserModel(modelIn);
@@ -74,35 +71,39 @@ public class ParserMain
 			Parse result = parser.parse(parse);
 
 			// Muestra el árbol de análisis en formato de texto
-			LOGGER.info("Parsed tree (text format): " + result.toString());
+			if (LOGGER.isLoggable(Level.INFO)) {
+				LOGGER.info(String.format("Parsed tree (text format): %s", result.toString()));
+			}
 
 			// Muestra el árbol de análisis en formato codificado
-			LOGGER.info("Parsed tree (encoded format):");
-			result.showCodeTree();
+			if (LOGGER.isLoggable(Level.INFO)) {
+				LOGGER.info("Parsed tree (encoded format):");
+				result.showCodeTree();
+			}
 		}
-		catch (IOException e)
-		{
+		catch (IOException e) {
 			// Registrar detalles del error para depuración
-			LOGGER.log(Level.SEVERE, "Error loading the model: {0}", e.getMessage());
-		}
-		finally
-		{
+			if (LOGGER.isLoggable(Level.SEVERE)) {
+				LOGGER.log(Level.SEVERE, String.format("Error loading the model: %s", e.getMessage()), e);
+			}
+		} finally {
 			// Cierra el flujo de entrada del modelo si está abierto.
-			if (modelIn != null)
-			{
-				try
-				{
+			if (modelIn != null) {
+				try {
 					modelIn.close();
-				}
-				catch (IOException e)
-				{
-					LOGGER.log(Level.WARNING, "Error closing the model stream: {0}", e.getMessage());
+				} catch (IOException e) {
+					if (LOGGER.isLoggable(Level.WARNING)) {
+						LOGGER.log(Level.WARNING, String.format("Error closing the model stream: %s", e.getMessage()), e);
+					}
 				}
 			}
 		}
 
 		// Indica que el programa ha finalizado.
-		LOGGER.info("Done");
+		if (LOGGER.isLoggable(Level.INFO)) {
+			LOGGER.info("Done");
+		}
 	}
 }
+
 
