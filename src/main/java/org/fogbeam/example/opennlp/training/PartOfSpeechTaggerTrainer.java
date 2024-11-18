@@ -97,8 +97,8 @@ public class PartOfSpeechTaggerTrainer {
 			}
 		}
 
-		// Indica que el entrenamiento y el guardado del modelo han finalizado.
-		System.out.println("done");
+		// Indica que el entrenamiento ha finalizado correctamente.
+		LOGGER.info("Entrenamiento completado correctamente.");
 	}
 }
 
