@@ -19,9 +19,7 @@ import java.util.logging.Logger;
  * Este programa carga un modelo de detección de entidades nombradas, procesa un conjunto
  * de tokens para identificar nombres propios y muestra los resultados.
  */
-public class NameFinderMain
-{
-
+public class NameFinderMain {
 	// Logger para el registro de mensajes
 	private static final Logger LOGGER = Logger.getLogger(NameFinderMain.class.getName());
 
@@ -34,12 +32,9 @@ public class NameFinderMain
 	 * @param args Argumentos de línea de comandos (no utilizados en este programa).
 	 * @throws Exception En caso de errores durante la ejecución.
 	 */
-	public static void main(String[] args) throws Exception
-	{
+	public static void main(String[] args) throws Exception {
 		InputStream modelIn = null; /**< Flujo de entrada para cargar el modelo NER. */
-
-		try
-		{
+		try {
 			// Carga el modelo preentrenado de detección de entidades nombradas desde un archivo.
 			modelIn = new FileInputStream("models/en-ner-person.model");
 			TokenNameFinderModel model = new TokenNameFinderModel(modelIn);
@@ -68,9 +63,9 @@ public class NameFinderMain
 			 * - Índice de inicio y fin de la entidad en el array de tokens.
 			 * - Tipo de entidad (por ejemplo, "person").
 			 */
-			for (Span ns : names)
-			{
-				System.out.println("ns: " + ns.toString());
+			for (Span ns : names) {
+				// Reemplaza el uso de System.out con el logger.
+				LOGGER.log(Level.INFO, "Entity span: {0}", ns.toString());
 
 				// Ejemplo para extraer y mostrar el texto correspondiente a la entidad.
 				StringBuilder sb = new StringBuilder();
@@ -78,35 +73,26 @@ public class NameFinderMain
 				{
 					sb.append(tokens[i]).append(" ");
 				}
-				System.out.println("Detected name: " + sb.toString().trim());
+				LOGGER.log(Level.INFO, "Detected name: {0}", sb.toString().trim());
 			}
 
 			// Limpia los datos adaptativos del modelo.
 			nameFinder.clearAdaptiveData();
-
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 			// En desarrollo: registrar detalles del error para depuración
 			LOGGER.log(Level.SEVERE, "Error loading the model: {0}", e.getMessage());
-
-		}
-		finally
-		{
+		} finally {
 			// Cierra el flujo de entrada del modelo si está abierto.
-			if (modelIn != null)
-			{
-				try
-				{
+			if (modelIn != null) {
+				try {
 					modelIn.close();
-				}
-				catch (IOException e)
-				{
+				} catch (IOException e) {
+					// Registra cualquier error al cerrar el flujo.
+					LOGGER.log(Level.WARNING, "Error closing model input stream: {0}", e.getMessage());
 				}
 			}
 		}
-
 		// Indica que el programa ha finalizado.
-		System.out.println("done");
+		LOGGER.log(Level.INFO, "done");
 	}
 }
