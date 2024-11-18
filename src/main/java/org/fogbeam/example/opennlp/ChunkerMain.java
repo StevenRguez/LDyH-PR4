@@ -91,7 +91,9 @@ public class ChunkerMain {
 				{
 					modelIn.close();
 				}
-				catch(IOException e) {}
+				catch(IOException e) {
+					LOGGER.log(Level.WARNING, "Error closing the model input stream: {0}", e.getMessage());
+				}
 			}
 		}
 
