@@ -17,7 +17,6 @@ import opennlp.tools.util.PlainTextByLineStream;
 import opennlp.tools.util.TrainingParameters;
 import org.fogbeam.example.opennlp.ChunkerMain;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -28,11 +27,11 @@ import java.util.logging.Logger;
  * de datos de entrenamiento. Los modelos generados permiten etiquetar palabras de un texto
  * con su categoría gramatical (por ejemplo, sustantivo, verbo, adjetivo).
  */
-public class PartOfSpeechTaggerTrainer
-{
+public class PartOfSpeechTaggerTrainer {
 	// Logger para el registro de mensajes
-	private static final Logger LOGGER = Logger.getLogger(ChunkerMain.class.getName());
-
+	private static final Logger LOGGER = Logger.getLogger(PartOfSpeechTaggerTrainer.class.getName());
+	// Constante para el mensaje de error
+	private static final String error = "Error loading the model: {0}";
 	/**
 	 * @brief Metodo principal para entrenar un modelo de etiquetado gramatical (POS).
 	 *
@@ -42,13 +41,11 @@ public class PartOfSpeechTaggerTrainer
 	 *
 	 * @param args Argumentos de línea de comandos (no utilizados).
 	 */
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
 		POSModel model = null; /**< Modelo de etiquetado gramatical generado. */
 		InputStream dataIn = null; /**< Flujo de entrada para leer los datos de entrenamiento. */
 
-		try
-		{
+		try {
 			// Carga los datos de entrenamiento desde un archivo en formato texto.
 			dataIn = new FileInputStream("training_data/en-pos.train");
 
@@ -64,25 +61,17 @@ public class PartOfSpeechTaggerTrainer
 					null,                        // Diccionario adicional (nulo en este caso).
 					null                         // Información adicional (nulo en este caso).
 			);
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 			// En desarrollo: registrar detalles del error para depuración
-			LOGGER.log(Level.SEVERE, "Error loading the model: {0}", e.getMessage());
-		}
-		finally
-		{
+			LOGGER.log(Level.SEVERE, error, e.getMessage());
+		} finally {
 			// Cierra el flujo de datos de entrada si está abierto.
-			if (dataIn != null)
-			{
-				try
-				{
+			if (dataIn != null) {
+				try {
 					dataIn.close();
-				}
-				catch (IOException e)
-				{
+				} catch (IOException e) {
 					// En desarrollo: registrar detalles del error para depuración
-					LOGGER.log(Level.SEVERE, "Error loading the model: {0}", e.getMessage());
+					LOGGER.log(Level.SEVERE, error, e.getMessage());
 				}
 			}
 		}
@@ -90,30 +79,21 @@ public class PartOfSpeechTaggerTrainer
 		OutputStream modelOut = null; /**< Flujo de salida para guardar el modelo entrenado. */
 		String modelFile = "models/en-pos.model"; /**< Ruta del archivo donde se guardará el modelo entrenado. */
 
-		try
-		{
+		try {
 			// Guarda el modelo entrenado en el archivo especificado.
 			modelOut = new BufferedOutputStream(new FileOutputStream(modelFile));
 			model.serialize(modelOut);
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 			// En desarrollo: registrar detalles del error para depuración
-			LOGGER.log(Level.SEVERE, "Error loading the model: {0}", e.getMessage());
-		}
-		finally
-		{
+			LOGGER.log(Level.SEVERE, error, e.getMessage());
+		} finally {
 			// Cierra el flujo de salida si está abierto.
-			if (modelOut != null)
-			{
-				try
-				{
+			if (modelOut != null) {
+				try {
 					modelOut.close();
-				}
-				catch (IOException e)
-				{
+				} catch (IOException e) {
 					// En desarrollo: registrar detalles del error para depuración
-					LOGGER.log(Level.SEVERE, "Error loading the model: {0}", e.getMessage());
+					LOGGER.log(Level.SEVERE, error, e.getMessage());
 				}
 			}
 		}
