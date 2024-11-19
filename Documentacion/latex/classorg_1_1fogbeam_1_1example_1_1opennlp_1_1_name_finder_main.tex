@@ -1,0 +1,43 @@
+\doxysection{Referencia de la clase org.\+fogbeam.\+example.\+opennlp.\+Name\+Finder\+Main}
+\hypertarget{classorg_1_1fogbeam_1_1example_1_1opennlp_1_1_name_finder_main}{}\label{classorg_1_1fogbeam_1_1example_1_1opennlp_1_1_name_finder_main}\index{org.fogbeam.example.opennlp.NameFinderMain@{org.fogbeam.example.opennlp.NameFinderMain}}
+\doxysubsubsection*{Métodos públicos estáticos}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{classorg_1_1fogbeam_1_1example_1_1opennlp_1_1_name_finder_main_a48247d65390730211c23c41f939c055a}{main}} (String\mbox{[}$\,$\mbox{]} args)  throws Exception  
+\begin{DoxyCompactList}\small\item\em Metodo principal del programa. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Documentación de funciones miembro}
+\Hypertarget{classorg_1_1fogbeam_1_1example_1_1opennlp_1_1_name_finder_main_a48247d65390730211c23c41f939c055a}\index{org.fogbeam.example.opennlp.NameFinderMain@{org.fogbeam.example.opennlp.NameFinderMain}!main@{main}}
+\index{main@{main}!org.fogbeam.example.opennlp.NameFinderMain@{org.fogbeam.example.opennlp.NameFinderMain}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily \label{classorg_1_1fogbeam_1_1example_1_1opennlp_1_1_name_finder_main_a48247d65390730211c23c41f939c055a} 
+static void org.\+fogbeam.\+example.\+opennlp.\+Name\+Finder\+Main.\+main (\begin{DoxyParamCaption}\item[{String\mbox{[}$\,$\mbox{]}}]{args}{}\end{DoxyParamCaption}) throws Exception\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Metodo principal del programa. 
+
+Este metodo carga un modelo de detección de entidades nombradas (NER, por sus siglas en inglés), identifica nombres propios en un conjunto de tokens y muestra las entidades detectadas.
+
+
+\begin{DoxyParams}{Parámetros}
+{\em args} & Argumentos de línea de comandos (no utilizados en este programa). \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Excepciones}
+{\em Exception} & En caso de errores durante la ejecución. \\
+\hline
+\end{DoxyExceptions}
+\texorpdfstring{$<$}{<} Flujo de entrada para cargar el modelo NER.
+
+Itera sobre las entidades detectadas (nombres propios). Cada objeto Span contiene\+:
+\begin{DoxyItemize}
+\item Índice de inicio y fin de la entidad en el array de tokens.
+\item Tipo de entidad (por ejemplo, "{}person"{}).
+\end{DoxyItemize}
+
+La documentación de esta clase está generada del siguiente archivo\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/org/fogbeam/example/opennlp/\mbox{\hyperlink{_name_finder_main_8java}{Name\+Finder\+Main.\+java}}\end{DoxyCompactItemize}

@@ -1,0 +1,26 @@
+\doxysection{Referencia del archivo src/main/java/org/fogbeam/example/opennlp/\+Chunker\+Main.java}
+\hypertarget{_chunker_main_8java}{}\label{_chunker_main_8java}\index{src/main/java/org/fogbeam/example/opennlp/ChunkerMain.java@{src/main/java/org/fogbeam/example/opennlp/ChunkerMain.java}}
+
+
+Programa principal para realizar el análisis de fragmentos gramaticales (chunks) en una oración.  
+
+
+{\ttfamily import java.\+io.\+File\+Input\+Stream;}\newline
+Gráfico de dependencias incluidas en Chunker\+Main.\+java\+:
+% FIG 0
+\doxysubsubsection*{Clases}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classorg_1_1fogbeam_1_1example_1_1opennlp_1_1_chunker_main}{org.\+fogbeam.\+example.\+opennlp.\+Chunker\+Main}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Paquetes}
+\begin{DoxyCompactItemize}
+\item 
+package \mbox{\hyperlink{namespaceorg_1_1fogbeam_1_1example_1_1opennlp}{org.\+fogbeam.\+example.\+opennlp}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Descripción detallada}
+Programa principal para realizar el análisis de fragmentos gramaticales (chunks) en una oración. 
+
+Este programa utiliza Open\+NLP para cargar un modelo de fragmentación, procesar una oración tokenizada con etiquetas POS y determinar las estructuras gramaticales, como frases nominales y verbales. 

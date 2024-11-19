@@ -1,0 +1,50 @@
+\doxysection{Referencia de la clase org.\+fogbeam.\+example.\+opennlp.\+Chunker\+Main}
+\hypertarget{classorg_1_1fogbeam_1_1example_1_1opennlp_1_1_chunker_main}{}\label{classorg_1_1fogbeam_1_1example_1_1opennlp_1_1_chunker_main}\index{org.fogbeam.example.opennlp.ChunkerMain@{org.fogbeam.example.opennlp.ChunkerMain}}
+\doxysubsubsection*{Métodos públicos estáticos}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{classorg_1_1fogbeam_1_1example_1_1opennlp_1_1_chunker_main_aebe7fefe98c9216bf8fa956439def47b}{main}} (String\mbox{[}$\,$\mbox{]} args)  throws Exception 
+\begin{DoxyCompactList}\small\item\em Metodo principal del programa. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Documentación de funciones miembro}
+\Hypertarget{classorg_1_1fogbeam_1_1example_1_1opennlp_1_1_chunker_main_aebe7fefe98c9216bf8fa956439def47b}\index{org.fogbeam.example.opennlp.ChunkerMain@{org.fogbeam.example.opennlp.ChunkerMain}!main@{main}}
+\index{main@{main}!org.fogbeam.example.opennlp.ChunkerMain@{org.fogbeam.example.opennlp.ChunkerMain}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily \label{classorg_1_1fogbeam_1_1example_1_1opennlp_1_1_chunker_main_aebe7fefe98c9216bf8fa956439def47b} 
+static void org.\+fogbeam.\+example.\+opennlp.\+Chunker\+Main.\+main (\begin{DoxyParamCaption}\item[{String\mbox{[}$\,$\mbox{]}}]{args}{}\end{DoxyParamCaption}) throws Exception\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Metodo principal del programa. 
+
+Este metodo carga un modelo de fragmentación, procesa una oración tokenizada y etiquetada gramaticalmente (POS tags) y genera etiquetas de fragmentos (chunk tags) para cada token.
+
+
+\begin{DoxyParams}{Parámetros}
+{\em args} & Argumentos de línea de comandos (no utilizados en este programa). \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Excepciones}
+{\em Exception} & En caso de que ocurra un error inesperado. \\
+\hline
+\end{DoxyExceptions}
+\texorpdfstring{$<$}{<} Flujo de entrada para cargar el modelo de fragmentación.
+
+\texorpdfstring{$<$}{<} Modelo de fragmentación cargado desde el archivo.
+
+\texorpdfstring{$<$}{<} Etiquetas de fragmentos generadas para los tokens.
+
+\texorpdfstring{$<$}{<} Probabilidades asociadas a las etiquetas.
+
+Los fragmentos generados contienen etiquetas que representan el tipo de estructura gramatical. Ejemplo\+:
+\begin{DoxyItemize}
+\item B-\/\+NP\+: Inicio de una frase nominal.
+\item I-\/\+NP\+: Continuación de una frase nominal.
+\item I-\/\+VP\+: Continuación de una frase verbal.
+\end{DoxyItemize}
+
+La documentación de esta clase está generada del siguiente archivo\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/org/fogbeam/example/opennlp/\mbox{\hyperlink{_chunker_main_8java}{Chunker\+Main.\+java}}\end{DoxyCompactItemize}
